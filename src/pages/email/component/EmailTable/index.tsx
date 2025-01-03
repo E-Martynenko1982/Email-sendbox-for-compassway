@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react'
-import { EmailItem } from './types';
+import { EmailTableProps } from './types';
 import { getSentEmails } from '../../../../services';
 
 
-const EmailTable = () => {
-  const [emails, setEmails] = useState<EmailItem[]>([]);
+
+const EmailTable: React.FC<EmailTableProps> = ({ emails }) => {
   const [page, setPage] = useState(1);
   const [count, setCount] = useState(0);
   const [next, setNext] = useState<string | null>(null);
@@ -14,7 +14,6 @@ const EmailTable = () => {
     try {
       const response = await getSentEmails(pageNumber)
 
-      setEmails(response.data.results)
       setCount(response.data.count)
       setNext(response.data.next)
       setPrev(response.data.previous)

@@ -3,3 +3,7 @@ export type EmailItem = {
 	recipient: string;
 	subject: string;
 };
+
+export type EmailTableProps = {
+	emails: EmailItem[];
+};

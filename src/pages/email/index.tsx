@@ -6,9 +6,16 @@ import EmailForm from "./component/EmailForm";
 import EmailTable from "./component/EmailTable";
 import * as Styled from "./index.styled";
 
+interface Email {
+  id: number;
+  recipient: string;
+  subject: string;
+}
+
 const EmailPage: React.FC = () => {
   const [currentUser, setCurrentUser] = useState<UserData | null>(null);
   const [showForm, setShowForm] = useState(false);
+  const [emails, setEmails] = useState<Email[]>([]);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -25,11 +32,18 @@ const EmailPage: React.FC = () => {
     };
     fetchUser();
   }, [navigate]);
+
   const handleLogout = () => {
     clearCredentials();
     navigate("/login");
   };
+
+  const handleEmailSent = (newEmail: Email) => {
+    setEmails((prevEmails) => [newEmail, ...prevEmails]);
+  };
+
   if (!currentUser) return <div>Loading user info...</div>;
+
   return (
     <Styled.EmailPageContainer>
       <div>
@@ -45,10 +59,10 @@ const EmailPage: React.FC = () => {
         <Styled.EmailPageButtons variant="contained" onClick={() => setShowForm(!showForm)}>
           {showForm ? "Hide form" : "Send Email"}
         </Styled.EmailPageButtons>
-        {showForm && <EmailForm user={currentUser} />}
+        {showForm && <EmailForm user={currentUser} onEmailSent={handleEmailSent} />}
       </div>
       <hr />
-      <EmailTable />
+      <EmailTable emails={emails} />
     </Styled.EmailPageContainer>
   );
 };

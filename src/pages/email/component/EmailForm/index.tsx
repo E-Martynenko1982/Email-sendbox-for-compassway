@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import { Props } from "../../types";
 import { sendEmail } from "../../../../services";
 import RichTextEditor from "../RichTestEditor";
 import * as Styled from "./index.styled";
+import { EmailFormProps } from "./types";
 
-const EmailForm: React.FC<Props> = ({ user }) => {
+const EmailForm: React.FC<EmailFormProps> = ({ user, onEmailSent }) => {
   const [recipient, setRecipient] = useState("");
   const [subject, setSubject] = useState("");
   const [message, setMessage] = useState("");
@@ -12,11 +12,12 @@ const EmailForm: React.FC<Props> = ({ user }) => {
   const handleSend = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      await sendEmail(user.id, recipient, subject, message);
+      const response = await sendEmail(user.id, recipient, subject, message);
       alert('Email sent successfully!');
       setRecipient("");
       setSubject("");
       setMessage("");
+      onEmailSent(response.data); // Call the callback function with the new email data
     } catch (error) {
       console.error(error);
       alert('Sending email failed. Please try again.')
@@ -54,7 +55,7 @@ const EmailForm: React.FC<Props> = ({ user }) => {
       />
       <div>
         <label>Text:</label>
-        <RichTextEditor value="text" onChange={(val) => setMessage(val)} />
+        <RichTextEditor value={message} onChange={(val) => setMessage(val)} />
       </div>
 
       <Styled.FormButton

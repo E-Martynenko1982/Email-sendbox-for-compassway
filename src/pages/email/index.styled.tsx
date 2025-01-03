@@ -7,7 +7,7 @@ flex-direction: column;
 align-items: flex-start;
 margin: 20px auto;
 padding: 5px;
-width: 600px;
+
 width: 100%;
 background-color:rgb(114, 131, 201);
 border-radius: 5px;
