@@ -26,9 +26,9 @@ body {
 	margin: 0;
 	display: flex;
 	justify-content: center;
-	align-items: flex-start;
+	align-items: center;
 
-	min-width: 320px;
+	min-width: 720px;
 	min-height: 100vh;
 }
 
