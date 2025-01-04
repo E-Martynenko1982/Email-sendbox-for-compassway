@@ -27,9 +27,11 @@ const RichTextEditor: React.FC<Props> = ({ value, onChange }) => {
   });
 
   const handleChange = (newEditorState: EditorState) => {
+    console.log("Editor State Changed");
     setEditorState(newEditorState);
     const content = newEditorState.getCurrentContent();
     const rawContent = convertToRaw(content);
+    console.log("Raw Content:", rawContent);
     onChange(JSON.stringify(rawContent));
   };
 
@@ -64,3 +66,4 @@ const RichTextEditor: React.FC<Props> = ({ value, onChange }) => {
 };
 
 export default RichTextEditor;
+

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { sendEmail } from "../../../../services";
-import RichTextEditor from "../RichTestEditor";
+import RichTextEditor from "../RichTextEditor";
 import * as Styled from "./index.styled";
 import { EmailFormProps } from "./types";
 
@@ -11,13 +11,15 @@ const EmailForm: React.FC<EmailFormProps> = ({ user, onEmailSent }) => {
 
   const handleSend = async (e: React.FormEvent) => {
     e.preventDefault();
+    console.log("Form Submitted");
     try {
       const response = await sendEmail(user.id, recipient, subject, message);
+      console.log("Email Sent:", response.data);
       alert('Email sent successfully!');
       setRecipient("");
       setSubject("");
       setMessage("");
-      onEmailSent(response.data); // Call the callback function with the new email data
+      onEmailSent(response.data);
     } catch (error) {
       console.error(error);
       alert('Sending email failed. Please try again.')
@@ -40,7 +42,7 @@ const EmailForm: React.FC<EmailFormProps> = ({ user, onEmailSent }) => {
         value={recipient}
         type="email"
         label="Recipient:"
-        onChange={(e) => setRecipient((e.target as HTMLInputElement).value)}
+        onChange={(e) => setRecipient(e.target.value)}
         required
         fullWidth
       />
@@ -49,7 +51,7 @@ const EmailForm: React.FC<EmailFormProps> = ({ user, onEmailSent }) => {
         type="text"
         variant="outlined"
         value={subject}
-        onChange={(e) => setSubject((e.target as HTMLInputElement).value)}
+        onChange={(e) => setSubject(e.target.value)}
         required
         fullWidth
       />
