@@ -6,8 +6,8 @@ export const FormContainer = styled(Box)`
   flex-direction: column;
   gap: 10px;
   padding: 5px;
-  max-width: 480px; 
-  max-height: 300px;
+  max-width: 680px; 
+  max-height: 900px;
   width: 100%;
   height: 100%;
   margin: 5px auto;

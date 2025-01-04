@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { sendEmail } from "../../../../services";
-import RichTextEditor from "../RichTextEditor";
+import { TextEditor } from "../TextEditor";
 import * as Styled from "./index.styled";
 import { EmailFormProps } from "./types";
 
@@ -57,7 +57,11 @@ const EmailForm: React.FC<EmailFormProps> = ({ user, onEmailSent }) => {
       />
       <div>
         <label>Text:</label>
-        <RichTextEditor value={message} onChange={(val) => setMessage(val)} />
+        <TextEditor
+          htmlText={message}
+          onChangeHTMLText={(val) => setMessage(val)}
+          placeholder="Write your message here..."
+        />
       </div>
 
       <Styled.FormButton
