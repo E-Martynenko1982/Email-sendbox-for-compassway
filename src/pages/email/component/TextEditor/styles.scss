@@ -17,10 +17,6 @@
     margin: 0 0 10px 25px;
   }
 
-  &-Wrapper {
-    padding: 16px;
-  }
-
   .DraftEditor-root {
     & .public-DraftEditorPlaceholder-root {
       color: #000;
@@ -81,6 +77,8 @@
 }
 
 .TextEditor-Wrapper {
+  padding: 16px;
+
   &__hidePlaceholder .public-DraftEditorPlaceholder-root {
     display: none;
   }
