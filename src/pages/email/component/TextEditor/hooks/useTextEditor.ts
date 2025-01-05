@@ -13,14 +13,12 @@ export const useTextEditor = (
 	);
 	const [isFocused, setFocused] = useState(false);
 
-	// Настройки для DraftJS->HTML
 	const options = {
 		styleToHTML: (style: string) =>
 			TEXT_EDITOR_STYLE_TO_HTML(style as TTextEditorTextStyle),
 	};
 	const convertMessageToHtml = convertToHTML(options);
 
-	// HTML->EditorState
 	const convertHtmlToRaw = (html: string): EditorState => {
 		const contentState = convertFromHTML({
 			htmlToStyle: (nodeName, node, currentStyle) => {
@@ -48,11 +46,6 @@ export const useTextEditor = (
 		setFocused(true);
 	}, []);
 
-	/**
-	 * При вводе: генерируем HTML, передаём наверх,
-	 * сохраняем EditorState без forceSelection,
-	 * чтобы курсор оставался справа при удалении символа
-	 */
 	const handleChangeText = useCallback(
 		(value: EditorState) => {
 			onChangeHTMLText?.(convertMessageToHtml(value.getCurrentContent()));

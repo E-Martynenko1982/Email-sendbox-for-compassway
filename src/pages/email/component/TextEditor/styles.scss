@@ -41,6 +41,8 @@
     height: 222px;
     color: inherit;
     overflow-y: scroll;
+    direction: ltr;
+    text-align: left;
   }
 
   position: relative;
@@ -82,12 +84,4 @@
   &__hidePlaceholder .public-DraftEditorPlaceholder-root {
     display: none;
   }
-}
-
-.DraftEditor-root,
-.DraftEditor-editorContainer,
-.public-DraftStyleDefault-block,
-.public-DraftStyleDefault-lt {
-  direction: ltr;
-  text-align: right;
 }

@@ -42,7 +42,6 @@ const TextEditorComponent: FC<TProps> = ({
 
   const contentState = editorState.getCurrentContent();
 
-  // Вычисляем классы для состояния placeholder
   let wrapperClassName = "TextEditor-Wrapper";
   if (
     !contentState.hasText() &&
@@ -51,7 +50,7 @@ const TextEditorComponent: FC<TProps> = ({
     wrapperClassName += " TextEditor-Wrapper__hidePlaceholder";
   }
 
-  // Функция для blockStyleFn: blockquote, прочее
+
   const getBlockStyle = (block: ContentBlock) => {
     switch (block.getType()) {
       case "blockquote":
@@ -71,9 +70,11 @@ const TextEditorComponent: FC<TProps> = ({
           "TextEditor-Area__isInvalid": isInvalid,
         })}
         onClick={handleChangeFocus}
+
       >
         <div className={wrapperClassName}>
           <Editor
+            textAlignment="left"
             blockStyleFn={getBlockStyle}
             customStyleMap={TEXT_EDITOR_CUSTOM_STYLES}
             editorState={editorState}
@@ -81,7 +82,7 @@ const TextEditorComponent: FC<TProps> = ({
             onBlur={handleChangeBlur}
             onChange={handleChangeText}
             placeholder={placeholder}
-            textAlignment="left"  // Говорим Draft, что это LTR-ввод
+
           />
         </div>
 
