@@ -46,15 +46,14 @@ export const useTextEditor = (
 		setFocused(true);
 	};
 
-	const handleChangeText = useCallback((value: EditorState) => {
-		const currentSelection = value.getSelection();
-		onChangeHTMLText?.(convertMessageToHtml(value.getCurrentContent()));
-		const stateWithContentAndSelection = EditorState.forceSelection(
-			value,
-			currentSelection
-		);
-		setEditorState(stateWithContentAndSelection);
-	}, []);
+	const handleChangeText = useCallback(
+		(value: EditorState) => {
+			onChangeHTMLText?.(convertMessageToHtml(value.getCurrentContent()));
+			setEditorState(value);
+			setEditorState(value);
+		},
+		[onChangeHTMLText, convertMessageToHtml]
+	);
 
 	const handleKeyCommand = useCallback(
 		(command: DraftEditorCommand, editorState: EditorState) => {

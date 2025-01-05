@@ -78,7 +78,6 @@ const TextEditorComponent: FC<TProps> = ({
             onBlur={handleChangeBlur}
             onChange={handleChangeText}
             placeholder={placeholder}
-            textAlignment="left"
           />
         </div>
         <Styled.TextEditorSub>
