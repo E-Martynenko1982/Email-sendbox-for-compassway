@@ -40,9 +40,10 @@ const TextEditorComponent: FC<TProps> = ({
     setEditorState,
   } = useTextEditor(htmlText, onChangeHTMLText);
 
-  let wrapperClassName = "TextEditor-Wrapper";
   const contentState = editorState.getCurrentContent();
 
+  // Вычисляем классы для состояния placeholder
+  let wrapperClassName = "TextEditor-Wrapper";
   if (
     !contentState.hasText() &&
     contentState.getBlockMap().first().getType() !== "unstyled"
@@ -50,6 +51,7 @@ const TextEditorComponent: FC<TProps> = ({
     wrapperClassName += " TextEditor-Wrapper__hidePlaceholder";
   }
 
+  // Функция для blockStyleFn: blockquote, прочее
   const getBlockStyle = (block: ContentBlock) => {
     switch (block.getType()) {
       case "blockquote":
@@ -62,6 +64,7 @@ const TextEditorComponent: FC<TProps> = ({
   return (
     <Styled.TextEditorWrapper className={clsx("TextEditor", classes?.textEditor)}>
       <Styled.TextEditorTitle>{title}</Styled.TextEditorTitle>
+
       <Styled.TextEditorArea
         className={clsx({
           "TextEditor-Area__isFocused": isFocused || contentState.hasText(),
@@ -78,8 +81,10 @@ const TextEditorComponent: FC<TProps> = ({
             onBlur={handleChangeBlur}
             onChange={handleChangeText}
             placeholder={placeholder}
+            textAlignment="left"  // Говорим Draft, что это LTR-ввод
           />
         </div>
+
         <Styled.TextEditorSub>
           <BlockStyleControls
             editorState={editorState}
@@ -91,7 +96,10 @@ const TextEditorComponent: FC<TProps> = ({
           <InlineStyleControls
             editorState={editorState}
             onToggle={(inlineStyle) => {
-              const newState = RichUtils.toggleInlineStyle(editorState, inlineStyle);
+              const newState = RichUtils.toggleInlineStyle(
+                editorState,
+                inlineStyle
+              );
               setEditorState(newState);
             }}
           />
@@ -102,3 +110,4 @@ const TextEditorComponent: FC<TProps> = ({
 };
 
 export const TextEditor = memo(TextEditorComponent);
+

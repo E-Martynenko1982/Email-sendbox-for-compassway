@@ -13,22 +13,24 @@ export const useTextEditor = (
 	);
 	const [isFocused, setFocused] = useState(false);
 
+	// Настройки для DraftJS->HTML
 	const options = {
 		styleToHTML: (style: string) =>
 			TEXT_EDITOR_STYLE_TO_HTML(style as TTextEditorTextStyle),
 	};
 	const convertMessageToHtml = convertToHTML(options);
 
+	// HTML->EditorState
 	const convertHtmlToRaw = (html: string): EditorState => {
 		const contentState = convertFromHTML({
 			htmlToStyle: (nodeName, node, currentStyle) => {
 				if (nodeName === "span" && node.className === "highlight") {
 					return currentStyle.add("HIGHLIGHT");
-				} else {
-					return currentStyle;
 				}
+				return currentStyle;
 			},
 		})(html);
+
 		return EditorState.createWithContent(contentState);
 	};
 
@@ -38,33 +40,37 @@ export const useTextEditor = (
 		}
 	}, [htmlText]);
 
-	const handleChangeBlur = () => {
+	const handleChangeBlur = useCallback(() => {
 		setFocused(false);
-	};
+	}, []);
 
-	const handleChangeFocus = () => {
+	const handleChangeFocus = useCallback(() => {
 		setFocused(true);
-	};
+	}, []);
 
+	/**
+	 * При вводе: генерируем HTML, передаём наверх,
+	 * сохраняем EditorState без forceSelection,
+	 * чтобы курсор оставался справа при удалении символа
+	 */
 	const handleChangeText = useCallback(
 		(value: EditorState) => {
 			onChangeHTMLText?.(convertMessageToHtml(value.getCurrentContent()));
-			setEditorState(value);
 			setEditorState(value);
 		},
 		[onChangeHTMLText, convertMessageToHtml]
 	);
 
 	const handleKeyCommand = useCallback(
-		(command: DraftEditorCommand, editorState: EditorState) => {
-			const newState = RichUtils.handleKeyCommand(editorState, command);
+		(command: DraftEditorCommand, currentEditorState: EditorState) => {
+			const newState = RichUtils.handleKeyCommand(currentEditorState, command);
 			if (newState) {
 				setEditorState(newState);
 				return "handled";
 			}
 			return "not-handled";
 		},
-		[setEditorState]
+		[]
 	);
 
 	return {

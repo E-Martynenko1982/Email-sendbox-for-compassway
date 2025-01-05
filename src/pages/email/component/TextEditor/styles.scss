@@ -83,3 +83,11 @@
     display: none;
   }
 }
+
+.DraftEditor-root,
+.DraftEditor-editorContainer,
+.public-DraftStyleDefault-block,
+.public-DraftStyleDefault-lt {
+  direction: ltr;
+  text-align: right;
+}
