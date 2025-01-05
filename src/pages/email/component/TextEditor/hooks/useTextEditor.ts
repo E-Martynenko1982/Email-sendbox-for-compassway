@@ -29,7 +29,9 @@ export const useTextEditor = (
 			},
 		})(html);
 
-		return EditorState.createWithContent(contentState);
+		return EditorState.moveFocusToEnd(
+			EditorState.createWithContent(contentState)
+		);
 	};
 
 	useEffect(() => {
