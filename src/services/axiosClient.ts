@@ -8,17 +8,3 @@ const axiosClient = axios.create({
 });
 
 export default axiosClient;
-
-// axiosClient.interceptors.request.use(
-// 	(config) => {
-// 		// Пример добавления токена авторизации
-// 		// const token = localStorage.getItem('token');
-// 		// if (token) {
-// 		//   config.headers.Authorization = `Bearer ${token}`;
-// 		// }
-// 		return config;
-// 	},
-// 	(error) => {
-// 		return Promise.reject(error);
-// 	}
-// );
